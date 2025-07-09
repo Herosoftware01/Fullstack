@@ -40,8 +40,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const configDemo = {
   user: 'sa',
   password: 'Fashion@01',
-  // server: 'ITADMIN',
-  server: '10.1.21.11',
+  server: 'ITADMIN',
+  // server: '10.1.21.11',
   database: 'demo',
   port: 1433,
   options: {
@@ -56,8 +56,8 @@ const configDemo = {
 const configHero = {
   user: 'sa',
   password: 'Fashion@01',
-  // server: 'ITADMIN',
-  server: '10.1.21.11',
+  server: 'ITADMIN',
+  // server: '10.1.21.11',
   database: 'HeroPowerBi',
   port: 1433,
   options: {

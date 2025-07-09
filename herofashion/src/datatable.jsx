@@ -1,11 +1,17 @@
-
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
-import "./App.css"; // create this CSS file
+import "./App.css"; // Make sure this exists and includes styles below
+import { Link } from "react-router-dom";
 
 const Datatables = () => {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState("");
+  const [columnFilters, setColumnFilters] = useState({
+    OrderNo: "",
+    PONo: "",
+    PODate: "",
+    Name: "",
+  });
   const [connectionStatus, setConnectionStatus] = useState("Disconnected");
   const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });
 
@@ -14,12 +20,41 @@ const Datatables = () => {
 
   const columns = ["OrderNo", "ImageOrder", "PONo", "PODate", "Name"];
 
-  const filteredData = data.filter(
-    (item) =>
+
+const highlightMatch = (text, filter) => {
+  if (!filter || typeof text !== "string") return text;
+
+  const parts = text.split(new RegExp(`(${filter})`, "gi"));
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === filter.toLowerCase() ? (
+          <span key={i} style={{ backgroundColor: "#3498db", color: "#fff", padding: "2px 4px", borderRadius: "4px" }}>
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+};
+
+
+  const filteredData = data.filter((item) => {
+    const globalMatch =
       item.OrderNo?.toLowerCase().includes(filterText.toLowerCase()) ||
       item.PONo?.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.Name?.toLowerCase().includes(filterText.toLowerCase())
-  );
+      item.Name?.toLowerCase().includes(filterText.toLowerCase());
+
+    const columnMatch =
+      item.OrderNo?.toLowerCase().includes(columnFilters.OrderNo.toLowerCase()) &&
+      item.PONo?.toLowerCase().includes(columnFilters.PONo.toLowerCase()) &&
+      item.PODate?.toLowerCase().includes(columnFilters.PODate.toLowerCase()) &&
+      item.Name?.toLowerCase().includes(columnFilters.Name.toLowerCase());
+
+    return globalMatch && columnMatch;
+  });
 
   useEffect(() => {
     axios
@@ -90,13 +125,19 @@ const Datatables = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>📋 Employee Table</h2>
-       <p>🧾 Data count: {data.length}</p>
+      <div className="flex gap-12 py-2"><h2>📋 Employee Table</h2>
+      <p>🧾 Data count: {data.length}</p>
       <p>🔌 WebSocket: <strong>{connectionStatus}</strong></p>
+     
+                </div>
+                 <button className="bg-red-400 rounded-2xl px-4">
+                  <Link to="/EmployeeTable">Go to Ag_Grid</Link>
+                </button>
 
+      {/* Global Search */}
       <input
         type="text"
-        placeholder="🔍 Search..."
+        placeholder="🔍 Global Search..."
         value={filterText}
         onChange={(e) => setFilterText(e.target.value)}
         style={{
@@ -108,10 +149,7 @@ const Datatables = () => {
         }}
       />
 
-      <div
-        ref={tableContainerRef}
-        className="table-scroll-container"
-      >
+      <div ref={tableContainerRef} className="table-scroll-container">
         <table className="data-table">
           <thead>
             <tr>
@@ -120,6 +158,53 @@ const Datatables = () => {
               <th>PO No</th>
               <th>PO Date</th>
               <th>Buyer</th>
+            </tr>
+            <tr>
+              <th>
+                <input
+                  type="text"
+                  placeholder="Filter"
+                  value={columnFilters.OrderNo}
+                  onChange={(e) =>
+                    setColumnFilters({ ...columnFilters, OrderNo: e.target.value })
+                  }
+                  className="column-filter"
+                />
+              </th>
+              <th></th>
+              <th>
+                <input
+                  type="text"
+                  placeholder="Filter"
+                  value={columnFilters.PONo}
+                  onChange={(e) =>
+                    setColumnFilters({ ...columnFilters, PONo: e.target.value })
+                  }
+                  className="column-filter"
+                />
+              </th>
+              <th>
+                <input
+                  type="text"
+                  placeholder="Filter"
+                  value={columnFilters.PODate}
+                  onChange={(e) =>
+                    setColumnFilters({ ...columnFilters, PODate: e.target.value })
+                  }
+                  className="column-filter"
+                />
+              </th>
+              <th>
+                <input
+                  type="text"
+                  placeholder="Filter"
+                  value={columnFilters.Name}
+                  onChange={(e) =>
+                    setColumnFilters({ ...columnFilters, Name: e.target.value })
+                  }
+                  className="column-filter"
+                />
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -143,12 +228,26 @@ const Datatables = () => {
                         width="60"
                         height="60"
                         style={{ objectFit: "cover", borderRadius: 6 }}
+                        
                       />
                     ) : col === "PODate" ? (
                       new Date(row[col]).toLocaleDateString()
-                    ) : (
-                      row[col]
-                    )}
+                    ) : col === "ImageOrder" ? (
+                        <img
+                            src={row[col]}
+                            alt="photo"
+                            width="60"
+                            height="60"
+                            style={{ objectFit: "cover", borderRadius: 6 }}
+                        />
+                        ) : col === "PODate" ? (
+                        new Date(row[col]).toLocaleDateString()
+                        ) : (
+                        highlightMatch(
+                            row[col],
+                            columnFilters[col] || filterText // ✅ prioritizes column filter if present
+                        )
+                        )}
                   </td>
                 ))}
               </tr>

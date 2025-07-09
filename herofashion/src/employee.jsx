@@ -398,27 +398,29 @@
 
 // export default EmployeeTable;
 
+
+
+
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from "axios";
 import { AgGridReact } from "ag-grid-react";
+import { Link } from "react-router-dom";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
   ClientSideRowModelModule,
   ModuleRegistry,
-} 
-from "ag-grid-community";
-import { Link } from "react-router-dom";
-import DataTable from "./datatable";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+} from "ag-grid-community";
 
-// Register AG Grid Community modules
+
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const EmployeeTable = () => {
   const gridRef = useRef();
   const wsRef = useRef(null);
+  const [gridApi, setGridApi] = useState(null);
   const [data, setData] = useState([]);
-  const [quickFilter, setQuickFilter] = useState(""); // 🔍 Search input state
+  const [quickFilter, setQuickFilter] = useState("");
   const [connectionStatus, setConnectionStatus] = useState("Disconnected");
 
   const containerStyle = useMemo(() => ({ width: "100%", height: "100vh" }), []);
@@ -455,7 +457,7 @@ const EmployeeTable = () => {
 
       ws.onerror = (err) => {
         console.error("❌ WebSocket error", err);
-        ws.close(); // Will trigger retry
+        ws.close();
       };
 
       ws.onclose = () => {
@@ -468,10 +470,14 @@ const EmployeeTable = () => {
     connectWebSocket();
 
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
+  if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+    wsRef.current.close();
+    console.log("🧹 WebSocket closed on unmount");
+  }
+};
+
+
+
   }, []);
 
   const columnDefs = useMemo(() => [
@@ -516,15 +522,24 @@ const EmployeeTable = () => {
       <div style={{ padding: "10px" }}>
         <div className="py-3">
           <button className="bg-red-400 rounded-2xl px-4">
-            <Link to="/datatable" >Go to DataTable</Link>
+            <Link to="/datatable">Go to DataTable</Link>
           </button>
         </div>
+
         {/* 🔍 Search Box */}
         <input
           type="text"
           placeholder="🔍 Search..."
           value={quickFilter}
-          onChange={(e) => setQuickFilter(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setQuickFilter(value);
+            if (gridApi && typeof gridApi.setQuickFilter === 'function') {
+              gridApi.setQuickFilter(value); // ✅ Safe call
+            } else {
+              console.warn("⚠️ gridApi not ready or setQuickFilter missing");
+            }
+          }}
           style={{
             padding: "8px",
             width: "300px",
@@ -534,24 +549,31 @@ const EmployeeTable = () => {
             fontSize: "14px"
           }}
         />
+
+
         <p>🧾 Data count: {data.length}</p>
         <p>🔌 WebSocket: <strong>{connectionStatus}</strong></p>
       </div>
 
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
-          ref={gridRef}
-          rowData={data}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          animateRows={true}
-          getRowHeight={() => 100}
-          quickFilterText={quickFilter} // ✅ Apply quick filter
-        />
+  ref={gridRef}
+  rowData={data}
+  columnDefs={columnDefs}
+  defaultColDef={defaultColDef}
+  animateRows={true}
+  getRowHeight={() => 100}
+  onGridReady={(params) => {
+    if (params.api) {
+      setGridApi(params.api); // ✅ Safe assignment
+    }
+  }}
+/>
       </div>
     </div>
   );
 };
 
 export default EmployeeTable;
+
 

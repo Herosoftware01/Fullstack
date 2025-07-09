@@ -10,9 +10,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="Home" element={<Home />} />
-        <Route path="DataTable" element={<DataTable />} />
+        <Route path="/" element={<DataTable />} />
         <Route path="PivotView" element={<PivotView />} />
-        <Route path="/" element={<EmployeeTable />} />
+        <Route path="EmployeeTable" element={<EmployeeTable />} />
         <Route path="/pivot_table" element={<PivotTable />} />
       </Routes>
     </Router>

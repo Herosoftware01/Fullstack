@@ -69,11 +69,11 @@
 }
 
 
-
 .table-scroll-container {
   max-height: 80vh;
   overflow: auto;
   border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .data-table {
@@ -81,15 +81,49 @@
   border-collapse: collapse;
 }
 
-.data-table th,
-.data-table td {
+/* All header cells */
+.data-table thead th {
+  position: sticky;
+  z-index: 2;
+  background-color: #a1d1cf;
   padding: 10px;
   border: 1px solid #ddd;
   text-align: center;
   min-width: 120px;
 }
 
+/* First header row (column names) */
+.data-table thead tr:nth-child(1) th {
+  top: 0;
+  z-index: 3;
+}
+
+/* Second header row (column filters) */
+.data-table thead tr:nth-child(2) th {
+  top: 40px; /* Adjust depending on the height of row 1 */
+  background-color: #ffffff;
+  z-index: 2;
+}
+
+.data-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  min-width: 120px;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
 .selected-cell {
-  background-color: #ffeaa7;
+  background-color: #b39e5a!important;
   outline: 2px solid #d35400;
+}
+
+.column-filter {
+  background-color: azure;
+  border: 1px solid #369b9b;
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
