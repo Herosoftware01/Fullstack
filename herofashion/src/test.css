@@ -1,0 +1,11 @@
+.par {
+
+    background-color: rgb(170, 211, 211);
+    
+}
+
+th {
+    background-color:lightblue;
+    color: rgb(236, 26, 26);
+    border:2px solid black
+}
