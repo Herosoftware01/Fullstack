@@ -26,7 +26,6 @@ const Datatable_columns = () => {
   const [updatedRow, setUpdatedRow] = useState(null);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showSelectedOnly, setShowSelectedOnly] = useState(false);
-  const [checkboxSearch, setCheckboxSearch] = useState("");
 
   const fetchData = async () => {
     try {
@@ -168,47 +167,29 @@ const Datatable_columns = () => {
   return (
     <div style={{ padding: 20 }}>
      
-      <div className="my-4 border rounded-lg p-4 bg-white shadow-sm">
-  {/* Section Heading */}
-  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
-    <h2 className="text-lg font-semibold text-gray-800">
-      📦 Total Orders: {data.length}
-    </h2>
-
-    {/* Search Input */}
-    <input
-      type="text"
-      placeholder="🔍 Search OrderNo..."
-      value={checkboxSearch}
-      onChange={(e) => setCheckboxSearch(e.target.value)}
-      className="w-full sm:w-64 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
-
-  {/* Scrollable Checkbox Container */}
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-60 overflow-y-auto pr-1">
-    {data
-      .filter((row) =>
-        row.OrderNo?.toString().toLowerCase().includes(checkboxSearch.toLowerCase())
-      )
-      .map((row, index) => (
-        <label
-          key={index}
-          className="inline-flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
-        >
-          <input
-            type="checkbox"
-            name="order"
-            value={row.OrderNo}
-            checked={selectedOrders.includes(row.OrderNo)}
-            onChange={() => handleCheckboxChange(row.OrderNo)}
-            className="form-checkbox h-4 w-4 text-blue-600"
-          />
-          <span className="text-sm text-gray-800">{row.OrderNo}</span>
-        </label>
-      ))}
-  </div>
+      <div className="flex justify-between">
+          <h2>📦Tota Order Data : {data.length}</h2>
+          <div className="overflow-x-auto whitespace-nowrap px-2 border rounded-lg max-w-[80%]">
+  {data.map((row, index) => (
+    <label
+      key={index}
+      htmlFor={`order-${index}`}
+      className="inline-flex items-center mr-4"
+    >
+      <input
+        type="checkbox"
+        id={`order-${index}`}
+        name="order"
+        value={row.OrderNo}
+        checked={selectedOrders.includes(row.OrderNo)}
+        onChange={() => handleCheckboxChange(row.OrderNo)}
+        className="mr-1"
+      />
+      <span className="text-sm">{row.OrderNo}</span>
+    </label>
+  ))}
 </div>
+      </div>
 
       <label className="block mb-3">
       <input
@@ -308,7 +289,32 @@ const Datatable_columns = () => {
           {filtered.map((row, ri) => (
             <tr key={ri}>
               {columns.map((c, ci) => (
-                
+                // <td
+                //   id={`cell-${ri}-${ci}`}
+                //   key={ci}
+                //   style={{
+                //     backgroundColor:
+                //       ri === selCell.row && ci === selCell.col ? "#e3e31e" : "transparent",
+                //   }}
+                //   contentEditable={c !== "JobnoOms"}
+                //   suppressContentEditableWarning
+                //   onBlur={(e) => {
+                //     const newVal = e.target.textContent;
+                //     setData((prevData) => {
+                //       const newData = [...prevData];
+                //       newData[ri] = { ...newData[ri], [c]: newVal };
+                //       return newData;
+                //     });
+                //   }}
+                //   onClick={() => setSelCell({ row: ri, col: ci })}
+                // >
+                //   {c === "ImageOrder" && row[c] ? (
+                //     <img src={row[c]} alt="" width={50} height={50} />
+                //   ) : (
+                //     highlight(row[c], colFilters[c])
+                //   )}
+                // </td>
+
                 <td
                   id={`cell-${ri}-${ci}`}
                   key={ci}
