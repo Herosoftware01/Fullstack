@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+#search_box{
+    border: 2px solid black;
+    align-items: center;
+}
+
+
+.nav-sidebar .nav-item .nav-link.active{
+    background-color: #007bff !important;
+    color: #f8f9fa !important;
+    /* Bootstrap's light text */
+}
+
+
+/* Hide all column menu buttons by default */
+.ag-theme-alpine .ag-header-cell-menu-button {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Show the menu button on hover */
+.ag-theme-alpine .ag-header-cell:hover .ag-header-cell-menu-button {
+    opacity: 1;
+}
+
+.ag-theme-alpine .ag-header-cell {
+    font-size: 13px;
+    color: #444;
+    font-family: system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        'Open Sans',
+        'Helvetica Neue',
+        sans-serif
+}
+
+.ag-theme-alpine .ag-cell {
+    font-size: 13px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+/* Add this in your stylesheet */
+.large-badge {
+    font-size: 0.7rem;
+    padding: 0.5em 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18), 0 1.5px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* .ag-row-even{
+    height: 120px!important;
+}
+
+.ag-row-odd{
+    height: 120px!important;
+} */
+
+
+.ag-cell-value{
+    background-color: #e6e9ec;
+} 
+.ag-cell-focus{
+    background-color: aqua;
+}
+
+
+.table-scroll-container {
+  max-height: 80vh;
+  overflow: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* All header cells */
+.data-table thead th {
+  position: sticky;
+  z-index: 2;
+  background-color: #a1d1cf;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* First header row (column names) */
+.data-table thead tr:nth-child(1) th {
+  top: 0;
+  z-index: 3;
+}
+
+/* Second header row (column filters) */
+.data-table thead tr:nth-child(2) th {
+  top: 40px; /* Adjust depending on the height of row 1 */
+  background-color: #ffffff;
+  z-index: 2;
+}
+
+.data-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  min-width: 120px;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.selected-cell {
+  background-color: #b39e5a!important;
+  outline: 2px solid #d35400;
+}
+
+.column-filter {
+  background-color: azure;
+  border: 1px solid #369b9b;
+  padding: 4px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.app-layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #1e272e;
+  color: white;
+  padding: 20px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f6fa;
+  overflow-y: auto;
+}
+
+/* styles.css or global.css */
+table.pvtTable {
+  @apply table-auto border-collapse w-full text-sm text-gray-800;
+}
+table.pvtTable th, table.pvtTable td {
+  @apply border px-4 py-2 text-left;
+}
+table.pvtTable th {
+  @apply bg-gray-100 font-medium;
+}
+
