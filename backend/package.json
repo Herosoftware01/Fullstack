@@ -17,6 +17,7 @@
     "express": "^5.1.0",
     "mssql": "^11.0.1",
     "p-limit": "^6.2.0",
+    "react-data-table-component": "^7.7.0",
     "ws": "^8.18.3"
   }
 }

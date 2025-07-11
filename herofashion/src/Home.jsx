@@ -2,13 +2,15 @@ import { useState } from 'react';
 import './App.css';
 import 'flowbite';
 import logo from './assets/images/logo_hero.png';
+import DataTable11 from './datatable11'
+import { Link } from "react-router-dom";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
     <>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className="bg-[#c8d4e3] border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
             href="https://herofashion.com/"
@@ -48,33 +50,32 @@ function App() {
             className={`${isOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`}
             id="navbar-default"
           >
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="bg-[#c8d4e3!important] font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               
-              {/* HOME link with blue hover */}
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-green-500 rounded-sm cursor-pointer transition-colors duration-200 
-                             hover:text-blue-700 hover:bg-gray-100 
-                             md:hover:bg-transparent md:p-0 
-                             dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-                >
-                  Home
-                </a>
-              </li>
+              
+
+                <li>
+                  <Link
+                    to="/"
+                    className="block py-2 px-3 text-green-500 rounded-sm cursor-pointer transition-colors duration-200 
+                              hover:text-blue-700 hover:bg-gray-100 
+                              md:hover:bg-transparent md:p-0 
+                              dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                  >
+                    Server 10
+                  </Link>
+                </li>
 
               {/* Other links with default green hover */}
-              <li>
-                <a
-                  href="#"
+              <Link
+                  to="/datatable11"
                   className="block py-2 px-3 text-green-500 rounded-sm cursor-pointer transition-colors duration-200 
-                             hover:text-blue-700 hover:bg-gray-100 
-                             md:hover:bg-transparent md:p-0 
-                             dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                            hover:text-blue-700 hover:bg-gray-100 
+                            md:hover:bg-transparent md:p-0 
+                            dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                 >
-                  About
-                </a>
-              </li>
+                  Server 11
+                </Link>
               <li>
                 <a
                   href="#"

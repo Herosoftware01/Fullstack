@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import "./App.css"; // Make sure this exists and includes styles below
 import { Link } from "react-router-dom";
+import Home from './Home'
 
 const Datatables = () => {
   const [data, setData] = useState([]);
@@ -125,8 +126,10 @@ const highlightMatch = (text, filter) => {
 
   return (
     <div style={{ padding: 20 }}>
+        <Home/>
       <div className="flex gap-12 py-2"><h2>📋 Employee Table</h2>
       <p>🧾 Data count: {data.length}</p>
+      <p>📡Server 10</p>
       <p>🔌 WebSocket: <strong>{connectionStatus}</strong></p>
      
                 </div>
