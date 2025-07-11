@@ -9,6 +9,7 @@ import Newquery from './newquery1.jsx'
 import Reactdatatable from './react_datatable.jsx'
 import Sample12 from './sample12.jsx'
 import Datatable_columns from './datatable_column.jsx'
+import Primary_table from './primarydable.jsx'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<DataTable />} />
         <Route path="/datatable11" element={<DataTable11 />} />
         <Route path="/datatable_columns" element={<Datatable_columns />} />
+        <Route path="/primary_table" element={<Primary_table />} />
         <Route path="/sample12" element={<Sample12 />} />
         <Route path="/reactdatatable" element={<Reactdatatable />} />
         <Route path="/newquery" element={<Newquery />} />

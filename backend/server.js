@@ -661,7 +661,7 @@ wss.on('connection', (ws) => {
 
 app.get('/api/table-join-data', async (req, res) => {
     try {
-       await sql.close();
+      //  await sql.close();
         await sql.connect(configHero11);
         // const result = await sql.query('select * from Ord_Order_Oms a inner join [Ord_UDF Complete K] b on a.[Jobno Oms]=b.[Jobno UDF Complete]');
         const result = await sql.query(`
@@ -676,6 +676,8 @@ app.get('/api/table-join-data', async (req, res) => {
         res.status(500).send('Database error');
     }
 });
+
+
 
 // app.put("/api/table-join-data/:OrderNo", async (req, res) => {
 //   try {
